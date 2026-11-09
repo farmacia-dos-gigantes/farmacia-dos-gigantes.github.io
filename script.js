@@ -6,6 +6,9 @@ const CONFIG = {
   // Banco de dados (Supabase). A chave abaixo é pública por natureza: quem protege os dados são as regras do banco.
   SUPABASE_URL: "https://wwkxyhyosgvelhizbqop.supabase.co",
   SUPABASE_KEY: "sb_publishable_CAEZkOdgcQtBgLI1cFZFJA_GifjYAMc",
+  // Cartões vazios (espaço reservado): o catálogo mostra cartões vazios até chegar a este total.
+  // Cada produto novo cadastrado no painel ocupa o lugar de um cartão vazio. Use 0 para não mostrar nenhum.
+  TOTAL_SLOTS: 7,
 };
 
 /* ---------- botões do grupo ---------- */
@@ -103,6 +106,27 @@ function buildCard(p, index) {
   return li;
 }
 
+// Cartão vazio: só o quadro, sem foto. Fica "inert" (não clica, não recebe foco, leitor de tela pula).
+function buildPlaceholder(index) {
+  const li = el("li", "card");
+  li.inert = true;
+
+  const media = el("div", "media");
+  media.dataset.tone = (index + Math.floor(index / 2)) % 2 === 0 ? "vermelho" : "preto";
+  li.appendChild(media);
+
+  const body = el("div", "card__body");
+  body.appendChild(el("h3", null, "Nome do produto"));
+  body.appendChild(el("p", null, "Descrição do produto."));
+  const foot = el("div", "card__foot");
+  foot.appendChild(el("div", "price", "Consulte no grupo"));
+  foot.appendChild(el("span", "btn btn--dark", "Pedir no grupo VIP"));
+  body.appendChild(foot);
+
+  li.appendChild(body);
+  return li;
+}
+
 async function loadCatalog() {
   const list = document.getElementById("produtos");
   const status = document.getElementById("status");
@@ -125,13 +149,12 @@ async function loadCatalog() {
     const products = await res.json();
 
     list.textContent = "";
-    if (!products.length) {
-      status.textContent = "Novos produtos em breve. Entre no grupo VIP para saber primeiro.";
-      return;
-    }
-    status.hidden = true;
     products.forEach((p, i) => list.appendChild(buildCard(p, i)));
+    for (let i = products.length; i < CONFIG.TOTAL_SLOTS; i++) list.appendChild(buildPlaceholder(i));
     bindGroupButtons(list);
+
+    if (products.length) status.hidden = true;
+    else status.textContent = "Novos produtos em breve. Entre no grupo VIP para saber primeiro.";
   } catch (err) {
     status.textContent = "Não foi possível carregar o catálogo agora. Tente de novo em instantes.";
     const retry = el("button", "btn btn--dark", "Tentar de novo");

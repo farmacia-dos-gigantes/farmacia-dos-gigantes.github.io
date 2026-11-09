@@ -22,6 +22,7 @@ Abra http://localhost:5177 (site) e http://localhost:5177/admin/ (painel).
 ## Como editar
 - **Produtos, fotos, preços e ordem:** pelo painel `/admin/`.
 - **Link do grupo VIP:** `script.js`, em `CONFIG.GROUP_LINK`. Vazio = os botões mostram um aviso.
+- **Cartões vazios:** `script.js`, em `CONFIG.TOTAL_SLOTS` (hoje 7). O catálogo completa com cartões vazios até esse total; cada produto novo no painel ocupa o lugar de um vazio. Use 0 para não mostrar nenhum.
 - **Textos fixos da página** (título, bloco do grupo): `index.html`.
 
 ## Pendências (dependem do cliente)

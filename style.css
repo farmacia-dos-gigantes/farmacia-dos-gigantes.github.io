@@ -384,16 +384,6 @@ a { color: inherit; }
 @media (min-width: 760px) {
   .grid { grid-template-columns: repeat(2, 1fr); }
   .media { aspect-ratio: 5 / 4; }
-
-  /* quantidade ímpar de produtos: o último ocupa a linha toda, lado a lado */
-  .grid > .card:last-child:nth-child(odd) {
-    grid-column: 1 / -1;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-  }
-  .grid > .card:last-child:nth-child(odd) .media { aspect-ratio: auto; min-height: 340px; }
-  .grid > .card:last-child:nth-child(odd) .card__body { justify-content: center; }
-  .grid > .card:last-child:nth-child(odd) .card__foot { margin-top: 0; }
 }
 
 @media (max-width: 420px) {
