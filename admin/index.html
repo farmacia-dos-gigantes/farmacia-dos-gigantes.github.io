@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Painel | Farmácia dos Gigantes</title>
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#0A0A0A">
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+  <header class="bar">
+    <span class="brand">
+      <svg class="brand__mark" viewBox="0 0 40 40" aria-hidden="true" focusable="false">
+        <rect width="40" height="40" rx="10" fill="#D4141C"/>
+        <path fill="#fff" d="M16 8h8v8h8v8h-8v8h-8v-8H8v-8h8z"/>
+      </svg>
+      <span class="brand__text"><span>Farmácia dos</span><strong>Gigantes</strong></span>
+    </span>
+    <button type="button" class="btn btn--ghost btn--sm" id="sair" hidden>Sair</button>
+  </header>
+
+  <main class="wrap">
+    <p id="carregando" role="status">Carregando...</p>
+
+    <section id="login" hidden aria-labelledby="login-titulo">
+      <h1 id="login-titulo">Entrar no painel</h1>
+      <p class="hint">Área só para a administração da farmácia.</p>
+      <form id="login-form" class="stack" autocomplete="on">
+        <label for="l-email">E-mail</label>
+        <input id="l-email" type="email" autocomplete="username" required>
+        <label for="l-senha">Senha</label>
+        <input id="l-senha" type="password" autocomplete="current-password" required>
+        <p class="erro" id="login-erro" role="alert"></p>
+        <button type="submit" class="btn btn--red" id="login-btn">Entrar</button>
+      </form>
+    </section>
+
+    <section id="painel" hidden aria-labelledby="painel-titulo">
+      <div class="head">
+        <h1 id="painel-titulo">Produtos</h1>
+        <button type="button" class="btn btn--red" id="novo">Novo produto</button>
+      </div>
+      <p class="hint">A ordem desta lista é a ordem do site. Produto escondido não aparece para os clientes.</p>
+      <p class="msg" id="msg" role="status"></p>
+      <ol class="lista" id="lista"></ol>
+      <p class="rodape"><a href="../">Ver o site</a></p>
+    </section>
+  </main>
+
+  <dialog id="dlg" aria-labelledby="dlg-titulo">
+    <form id="form" class="stack" novalidate>
+      <h2 id="dlg-titulo">Novo produto</h2>
+
+      <div class="foto">
+        <div class="foto__box">
+          <img id="f-prev" alt="" hidden>
+          <span id="f-vazio">Sem foto</span>
+        </div>
+        <div class="foto__acoes">
+          <input id="f-foto" type="file" accept="image/*" class="visually-hidden">
+          <label class="btn btn--dark btn--sm" for="f-foto">Escolher foto</label>
+          <button type="button" class="btn btn--ghost-dark btn--sm" id="f-remover" hidden>Tirar foto</button>
+        </div>
+      </div>
+
+      <label for="f-nome">Nome do produto</label>
+      <input id="f-nome" maxlength="120" required>
+
+      <label for="f-desc">Descrição (opcional)</label>
+      <textarea id="f-desc" rows="3" maxlength="300"></textarea>
+
+      <div class="duas">
+        <div>
+          <label for="f-preco">Preço (R$)</label>
+          <input id="f-preco" inputmode="decimal" placeholder="Ex.: 29,90">
+        </div>
+        <div>
+          <label for="f-promo">Preço promocional (R$)</label>
+          <input id="f-promo" inputmode="decimal" placeholder="Ex.: 24,90">
+        </div>
+      </div>
+      <p class="hint">Sem preço, o cartão mostra "Consulte no grupo". Com promoção, o preço normal aparece riscado.</p>
+
+      <label class="check"><input id="f-ativo" type="checkbox" checked> Mostrar este produto no site</label>
+
+      <p class="erro" id="f-erro" role="alert"></p>
+      <div class="botoes">
+        <button type="button" class="btn btn--ghost-dark" id="f-cancelar">Cancelar</button>
+        <button type="submit" class="btn btn--red" id="f-salvar">Salvar</button>
+      </div>
+    </form>
+  </dialog>
+
+  <script src="admin.js" defer></script>
+</body>
+</html>

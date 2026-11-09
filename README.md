@@ -1,24 +1,37 @@
 # Farmácia dos Gigantes
 
-Site de catálogo com grupo VIP no WhatsApp. HTML, CSS e JS estáticos, sem build.
+Site de catálogo com grupo VIP no WhatsApp e painel de administração. HTML, CSS e JS estáticos (GitHub Pages), com banco de dados, login e fotos no Supabase.
+
+## Como funciona
+- **Site** (`index.html`, `script.js`): lê a lista de produtos do Supabase e monta os cartões. Mostra só produtos ativos, na ordem definida no painel.
+- **Painel** (`admin/`): endereço `/admin/`, sem link no site. Login com e-mail e senha. Cadastra, edita, esconde, apaga e reordena produtos, com foto, preço e preço promocional.
+- **Banco** (`supabase/setup.sql`): tabela `products` e pasta de fotos `products`. Qualquer pessoa lê produtos ativos e vê as fotos; só a conta de administrador altera.
+- A chave do Supabase em `script.js` e `admin/admin.js` é pública (publishable). A segurança vem das regras do banco. Nunca colocar no código a chave `secret` nem a `service_role`.
 
 ## Como rodar
 ```bash
 python -m http.server 5177
 ```
-Abra http://localhost:5177.
+Abra http://localhost:5177 (site) e http://localhost:5177/admin/ (painel).
+
+## Configuração do Supabase (uma vez)
+1. Rodar `supabase/setup.sql` no SQL Editor.
+2. Em Authentication, desligar "Allow new users to sign up".
+3. Em Authentication > Users, criar o usuário administrador (e-mail e senha) com "Auto Confirm User".
 
 ## Como editar
+- **Produtos, fotos, preços e ordem:** pelo painel `/admin/`.
 - **Link do grupo VIP:** `script.js`, em `CONFIG.GROUP_LINK`. Vazio = os botões mostram um aviso.
-- **Produtos:** cada `<li class="card">` em `index.html` é um produto. Troque o nome (`h3`), a descrição (`p`) e o `aria-label` do botão. Para tirar um produto, apague o `<li>`; para somar, copie um. Aceita de 3 a 5 (com número ímpar, o último ocupa a linha toda).
-- **Cor do quadro:** `data-tone="vermelho"` ou `"preto"` no `div.media`.
-- **Foto no lugar do desenho:** troque o `<svg>` do quadro por `<img src="public/images/arquivo.webp" alt="Nome do produto">` e peça um ajuste de CSS.
-- **Preço:** hoje cada card mostra "Consulte no grupo" (`span.price`).
+- **Textos fixos da página** (título, bloco do grupo): `index.html`.
 
 ## Pendências (dependem do cliente)
 - Link do grupo VIP do WhatsApp.
-- Lista real dos produtos (nome, descrição) e, se quiser, fotos.
+- Cadastrar os produtos reais no painel.
 - Logo oficial (a atual é provisória).
-- Cidade, endereço, telefone e horário (para dados estruturados e rodapé).
-- Dados regulatórios de farmácia: CNPJ, responsável técnico e CRF costumam ser exigidos em material de divulgação. Confirmar com o cliente. Não divulgar medicamento de venda sob prescrição.
+- Cidade, endereço, telefone e horário.
+- Dados regulatórios de farmácia: CNPJ, responsável técnico e CRF costumam ser exigidos na divulgação. Não cadastrar remédio de venda sob prescrição.
 - Domínio próprio.
+
+## Avisos
+- O projeto gratuito do Supabase pausa após cerca de 1 semana sem acessos. Visitas normais ao site mantêm o projeto ativo; se pausar, reativar no painel do Supabase.
+- Fotos são reduzidas para 1200 px e convertidas para WebP no navegador, antes do envio.

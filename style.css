@@ -239,10 +239,10 @@ a { color: inherit; }
   background: var(--bg);
 }
 
-.media[data-tone="vermelho"] { --bg: var(--vermelho); --ink: var(--preto); --cap: var(--gelo); --label: var(--gelo); }
-.media[data-tone="preto"] { --bg: var(--preto); --ink: var(--vermelho); --cap: var(--gelo); --label: var(--gelo); }
+.media[data-tone="vermelho"] { --bg: var(--vermelho); }
+.media[data-tone="preto"] { --bg: var(--preto); }
 
-/* disco de luz atrás da embalagem */
+/* disco de luz atrás da foto */
 .media::before {
   content: "";
   position: absolute;
@@ -256,22 +256,23 @@ a { color: inherit; }
   transform: translate(-50%, -48%);
 }
 
-/* a embalagem é maior que o quadro e fica cortada embaixo */
-.media svg {
+/* a foto do produto preenche o quadro, acima do disco */
+.media img {
   position: absolute;
-  bottom: -15%;
-  left: 50%;
-  height: 108%;
-  width: auto;
-  transform: translateX(-50%) rotate(var(--tilt, -6deg));
-  transform-origin: 50% 80%;
+  inset: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
-.p-body { fill: var(--ink); }
-.p-cap { fill: var(--cap); }
-.p-label { fill: var(--label); }
-.p-mark { fill: var(--ink); }
-.p-handle { fill: none; stroke: var(--cap); stroke-width: 12; stroke-linecap: round; }
+.catalog__status {
+  margin-bottom: 24px;
+  color: var(--cinza);
+  font-size: 1.15rem;
+}
+
+.catalog__status .btn { margin-top: 16px; display: flex; width: fit-content; }
 
 .card__body {
   display: flex;
@@ -301,6 +302,8 @@ a { color: inherit; }
 }
 
 .price { color: var(--vermelho); font-weight: 600; }
+.price__old { margin-right: 0.5em; color: var(--cinza); font-weight: 400; }
+.price__now { font-size: 1.3rem; }
 
 /* ---------- bloco do grupo VIP ---------- */
 .vip {
